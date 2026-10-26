@@ -1,0 +1,158 @@
+.connection-bar {
+  display:flex;
+  align-items:center;
+  gap:22px;
+  padding:17px 0;
+  border-bottom:1px solid var(--line);
+  min-height:82px;
+}
+
+.source-control {
+  display:flex;
+  align-items:center;
+  gap:2px;
+  padding:3px;
+  border:1px solid var(--line);
+  border-radius:3px;
+  flex-shrink:0;
+}
+
+.source-control button {
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  padding:7px 14px;
+  min-height:36px;
+  font-size:11px;
+}
+
+.source-control button[aria-pressed="true"] {
+  background:var(--raised);
+  color:var(--text);
+  font-weight:600;
+}
+
+.connection-copy {
+  min-width:0;
+  flex:1;
+}
+
+.connection-copy p:first-child {
+  font-size:12px;
+  font-weight:600;
+  overflow-wrap:anywhere;
+}
+
+.connection-copy p:last-child {
+  font-size:10px;
+  color:var(--muted);
+  margin-top:2px;
+  overflow-wrap:anywhere;
+}
+
+.connection-bar>.text-button {
+  font-size:11px;
+  white-space:nowrap;
+}
+
+.connection-bar[data-state="ready"] #connection-status:before {
+  content:"";
+  display:inline-block;
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:var(--accent);
+  margin-right:8px;
+  vertical-align:middle;
+}
+
+.deck-name {
+  overflow-wrap:anywhere;
+}
+
+.app-footer>span {
+  overflow-wrap:anywhere;
+}
+
+.deck-table th.number:last-child {
+  width:75px;
+}
+
+[data-source="anki"] .deck-table th.number {
+  width:72px;
+}
+
+.source-control button:focus-visible {
+  outline-offset:2px;
+}
+
+.home-start:disabled {
+  opacity:.65;
+}
+
+.connection-bar~main {
+  min-height:calc(100vh - 267px);
+}
+
+@media(max-width:1050px) {
+  [data-source="anki"] .deck-table th.number {
+    width:60px;
+  }
+
+}
+
+@media(max-width:760px) {
+  .connection-bar {
+    flex-wrap:wrap;
+    gap:9px 15px;
+  }
+
+  .connection-bar>.text-button {
+    margin-left:auto;
+    min-height:32px;
+  }
+
+  .connection-copy {
+    flex-basis:calc(100% - 150px);
+  }
+
+}
+
+@media(max-width:520px) {
+  .connection-bar {
+    padding:13px 0;
+  }
+
+  .source-control button {
+    padding:8px 11px;
+  }
+
+  .connection-copy p:first-child {
+    font-size:11px;
+  }
+
+  .connection-copy p:last-child {
+    font-size:9px;
+  }
+
+  [data-source="anki"] .deck-table th.number {
+    width:48px;
+  }
+
+  [data-source="anki"] .deck-name {
+    font-size:14px;
+  }
+
+  [data-source="anki"][data-theme="dark"] .deck-name {
+    font-size:22px;
+  }
+
+  .deck-table th.number:last-child {
+    width:44px;
+  }
+
+  .app-footer>span:last-child {
+    margin-left:auto;
+  }
+
+}

@@ -1,0 +1,26 @@
+{
+  "name": "study-workspace",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "workspaces": ["apps/*", "packages/*"],
+  "engines": { "node": ">=22.12.0" },
+  "packageManager": "npm@11.16.0",
+  "scripts": {
+    "build": "npm run build --workspace @study/contracts && npm run build --workspace @study/api && npm run build --workspace @study/web",
+    "typecheck": "npm run build --workspace @study/contracts && npm run typecheck --workspaces --if-present",
+    "start": "node apps/api/dist/server.js",
+    "launch": "node scripts/launch.mjs",
+    "dev": "node scripts/dev.mjs",
+    "test": "npm run build && npm run test:unit && npm run test:e2e",
+    "build:test": "npm run build --workspace @study/contracts && tsc -p tsconfig.tests.json",
+    "test:unit": "npm run build:test && node --test .test-build/tests/api/*.test.js .test-build/tests/contracts/*.test.js",
+    "test:e2e": "npm run build:test && playwright test",
+    "test:live": "node scripts/live-smoke.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.1",
+    "@types/node": "26.6.5",
+    "typescript": "5.9.3"
+  }
+}

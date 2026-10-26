@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open Study</title>
+  <style>
+    :root{color-scheme:light dark;font-family:system-ui,sans-serif;background:#fbfcfe;color:#111f40}*{box-sizing:border-box}body{max-width:700px;margin:12vh auto;padding:32px}small{letter-spacing:.15em;text-transform:uppercase;color:#55617a}h1{font-size:clamp(38px,7vw,64px);letter-spacing:-.06em;font-weight:500;line-height:1.1}p{line-height:1.7;max-width:520px}a{color:inherit}#open-study{display:inline-block;padding:15px 24px;margin:18px 0;background:#254bff;color:white;text-decoration:none;border-radius:3px}#open-study:focus-visible{outline:3px solid #254bff;outline-offset:5px}.note{color:#55617a;font-size:14px}@media(prefers-color-scheme:dark){:root{background:#121412;color:#f2f3ea}small,.note{color:#b0b6aa}#open-study{background:#e9ede1;color:#161a14}}
+  </style>
+</head>
+<body>
+  <small>Study / Local desktop companion</small>
+  <h1>Your next session.</h1>
+  <p>Study now opens through its local server. Double-click <strong>Start Study.cmd</strong> in this project folder, wait for it to say Study is ready, then open the app below.</p>
+  <a id="open-study" href="http://127.0.0.1:4173/">Open Study ↗</a>
+  <p class="note">Keep that window running while you use Study. Keep Anki open for your real deck library, or choose Demo to explore the sample cards.</p>
+  <p class="note">The first run needs Node.js 22.12 or newer. See <a href="README.md">the project guide</a> for setup.</p>
+  <script>if(['#today','#library','#review'].includes(location.hash)){document.getElementById('open-study').href='http://127.0.0.1:4173/'+location.hash;}</script>
+</body>
+</html>

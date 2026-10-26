@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "module": "NodeNext", "moduleResolution": "NodeNext", "types": ["node"],
+    "rootDir": ".", "outDir": ".test-build", "sourceMap": false,
+    "declaration": false
+  },
+  "include": ["tests/api/**/*.ts", "tests/contracts/**/*.ts", "tests/fixtures/**/*.ts", "apps/api/src/**/*.ts"]
+}

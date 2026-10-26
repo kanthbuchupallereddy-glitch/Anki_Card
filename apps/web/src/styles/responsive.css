@@ -1,0 +1,498 @@
+@media(min-width:1400px) {
+  .app-shell {
+    padding:0 70px;
+  }
+
+  .screen {
+    padding-top:48px;
+  }
+
+  .hero-art {
+    margin-top:-30px;
+  }
+
+  .home-decks {
+    margin-top:40px;
+  }
+
+}
+
+@media(max-width:1050px) {
+  .app-shell {
+    padding:0 32px;
+  }
+
+  .app-header {
+    gap:34px;
+  }
+
+  .home-grid {
+    column-gap:24px;
+  }
+
+  .home-heading h1 {
+    font-size:42px;
+    margin-top:38px;
+  }
+
+  .hero-art {
+    min-height:310px;
+    margin:0 -12px;
+  }
+
+  .home-heading .sample-label {
+    display:none;
+  }
+
+  .workload {
+    gap:22px;
+  }
+
+  .new-metric {
+    padding-left:22px;
+  }
+
+  .home-summary>.quiet-note {
+    font-size:10px;
+  }
+
+  .home-start {
+    font-size:12px;
+    padding:14px 17px;
+  }
+
+  .due-number {
+    font-size:100px;
+  }
+
+  .new-number {
+    font-size:64px;
+  }
+
+  [data-theme="dark"] .home-grid {
+    column-gap:36px;
+  }
+
+  [data-theme="dark"] .home-heading h1 {
+    font-size:190px;
+  }
+
+  .deck-table th.number {
+    width:60px;
+  }
+
+  .deck-name {
+    font-size:15px;
+  }
+
+}
+
+@media(max-width:760px) {
+  .app-shell {
+    padding:0 22px;
+  }
+
+  .app-header {
+    gap:20px;
+    min-height:130px;
+    display:grid;
+    grid-template-columns:auto 1fr;
+    grid-template-areas:"brand theme" "nav nav";
+    padding-top:15px;
+  }
+
+  .wordmark {
+    grid-area:brand;
+  }
+
+  .appearance {
+    grid-area:theme;
+    justify-self:end;
+    margin-left:0;
+  }
+
+  .main-nav {
+    grid-area:nav;
+    gap:36px;
+    min-height:51px;
+    align-self:stretch;
+  }
+
+  .screen {
+    padding-top:28px;
+  }
+
+  .home-grid {
+    grid-template-columns:1fr .8fr;
+    column-gap:12px;
+  }
+
+  .home-heading h1 {
+    font-size:36px;
+    letter-spacing:-.06em;
+    margin:26px 0 20px;
+  }
+
+  .hero-art {
+    min-height:250px;
+    margin:12px -16px 0 -14px;
+  }
+
+  .due-number {
+    font-size:84px;
+  }
+
+  .new-number {
+    font-size:50px;
+  }
+
+  .workload {
+    gap:18px;
+  }
+
+  .new-metric {
+    padding-left:18px;
+  }
+
+  .metric-caption {
+    font-size:11px;
+  }
+
+  .home-start {
+    gap:16px;
+  }
+
+  .quiet-note {
+    font-size:10px;
+  }
+
+  .home-decks {
+    margin-top:38px;
+  }
+
+  [data-theme="dark"] .home-grid {
+    grid-template-columns:1fr;
+    grid-template-areas:"heading" "summary" "decks";
+  }
+
+  [data-theme="dark"] .home-heading h1 {
+    font-size:clamp(105px,27vw,185px);
+    margin-bottom:24px;
+    padding-bottom:25px;
+  }
+
+  [data-theme="dark"] .home-summary {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0 25px;
+    align-items:center;
+  }
+
+  [data-theme="dark"] .home-summary>.quiet-note {
+    grid-column:2;
+    grid-row:2;
+    margin-top:0;
+  }
+
+  [data-theme="dark"] .home-start {
+    grid-column:2;
+    grid-row:1;
+  }
+
+  [data-theme="dark"] .workload {
+    grid-column:1;
+    grid-row:1 / 3;
+    margin:0;
+  }
+
+  [data-theme="dark"] .due-number {
+    font-size:105px;
+  }
+
+  [data-theme="dark"] .new-number {
+    font-size:48px;
+  }
+
+  [data-theme="dark"] .home-decks {
+    margin-top:32px;
+  }
+
+  .app-footer {
+    flex-wrap:wrap;
+    justify-content:flex-start;
+    gap:8px 24px;
+    padding:20px 0;
+    font-size:10px;
+  }
+
+  .app-footer>span:first-child {
+    flex-basis:100%;
+  }
+
+  .app-footer a {
+    margin-left:auto;
+  }
+
+  .page-heading h1 {
+    font-size:48px;
+  }
+
+  [data-theme="dark"] .page-heading h1 {
+    font-size:68px;
+  }
+
+  .review-card {
+    padding:30px;
+    min-height:250px;
+  }
+
+  .review-card h2 {
+    font-size:26px;
+  }
+
+  .review-heading h1 {
+    font-size:25px;
+  }
+
+  .rating-buttons button {
+    padding:12px;
+  }
+
+  .review-bottom {
+    gap:5px;
+  }
+
+  .session-complete h2 {
+    font-size:36px;
+  }
+
+}
+
+@media(max-width:520px) {
+  .app-shell {
+    padding:0 20px;
+  }
+
+  .appearance button {
+    padding:0 10px;
+    min-height:38px;
+  }
+
+  .wordmark {
+    font-size:27px;
+  }
+
+  .home-grid {
+    grid-template-columns:1fr;
+    grid-template-areas:"heading" "summary" "art" "decks";
+  }
+
+  .home-heading .sample-label {
+    display:block;
+    font-size:8px;
+  }
+
+  .home-heading h1 {
+    font-size:43px;
+    max-width:340px;
+    margin:29px 0 23px;
+  }
+
+  .hero-art {
+    min-height:0;
+    margin:5px 0 -24px;
+    max-height:240px;
+    overflow:hidden;
+  }
+
+  .hero-art img {
+    max-width:315px;
+    width:100%;
+    transform:translateY(-2px);
+  }
+
+  .home-start {
+    max-width:none;
+    font-size:13px;
+  }
+
+  .home-summary>.quiet-note {
+    font-size:10px;
+    max-width:none;
+  }
+
+  .due-number {
+    font-size:100px;
+  }
+
+  .new-number {
+    font-size:65px;
+  }
+
+  .workload {
+    gap:28px;
+    margin-bottom:24px;
+  }
+
+  .new-metric {
+    padding-left:28px;
+  }
+
+  .metric-caption {
+    font-size:12px;
+  }
+
+  .home-decks {
+    margin-top:36px;
+  }
+
+  .deck-table th {
+    font-size:8px;
+    letter-spacing:.14em;
+    padding:10px 6px;
+  }
+
+  .deck-table th.number {
+    width:44px;
+  }
+
+  .deck-table th:last-child {
+    width:35px;
+  }
+
+  .deck-table td {
+    padding:10px 6px;
+    font-size:13px;
+  }
+
+  .deck-name {
+    font-size:14px;
+  }
+
+  .deck-description {
+    font-size:10px;
+    max-width:160px;
+  }
+
+  .deck-open {
+    min-height:44px;
+    width:32px;
+  }
+
+  .section-heading h2 {
+    font-size:10px;
+  }
+
+  .text-link {
+    font-size:11px;
+  }
+
+  [data-theme="dark"] .home-heading h1 {
+    font-size:clamp(104px,28vw,150px);
+    letter-spacing:.04em;
+  }
+
+  [data-theme="dark"] .home-summary {
+    display:block;
+  }
+
+  [data-theme="dark"] .workload {
+    margin-bottom:24px;
+  }
+
+  [data-theme="dark"] .due-number {
+    font-size:130px;
+  }
+
+  [data-theme="dark"] .new-number {
+    font-size:65px;
+  }
+
+  [data-theme="dark"] .home-summary>.quiet-note {
+    margin-top:12px;
+  }
+
+  [data-theme="dark"] .deck-name {
+    font-size:22px;
+  }
+
+  .page-heading {
+    gap:12px;
+    align-items:flex-end;
+  }
+
+  .page-heading>.sample-label {
+    font-size:8px;
+    max-width:75px;
+    text-align:right;
+  }
+
+  .library-toolbar {
+    gap:12px;
+    align-items:flex-end;
+  }
+
+  .library-toolbar>.quiet-note {
+    font-size:10px;
+  }
+
+  .search-field input {
+    font-size:16px;
+  }
+
+  .review-heading h1 {
+    font-size:23px;
+  }
+
+  .review-topline {
+    margin-bottom:25px;
+    gap:8px;
+  }
+
+  .review-topline .sample-label {
+    font-size:8px;
+  }
+
+  .review-card {
+    padding:26px 22px;
+    min-height:240px;
+  }
+
+  .review-card h2 {
+    font-size:24px;
+  }
+
+  .card-answer>p:first-of-type {
+    font-size:21px;
+  }
+
+  .answer-detail {
+    font-size:13px;
+  }
+
+  .rating-buttons {
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+  }
+
+  .rating-buttons button {
+    min-height:54px;
+  }
+
+  .review-bottom>.quiet-note {
+    font-size:9px;
+  }
+
+  .session-complete h2 {
+    font-size:34px;
+  }
+
+  .app-footer {
+    font-size:9px;
+  }
+
+  .library-note {
+    font-size:11px;
+  }
+
+}

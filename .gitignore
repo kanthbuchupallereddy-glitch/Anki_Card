@@ -1,0 +1,24 @@
+# Personal feature specifications and development records stay local.
+/specs/
+/docs/product-spec.md
+/docs/acceptance-matrix.md
+/docs/verification.md
+
+# Local configuration, dependencies, generated diagnostics, and data.
+.env
+.env.*
+!.env.example
+node_modules/
+dist/
+*.tsbuildinfo
+/test-results/
+/playwright-report/
+/coverage/
+/.test-build/
+*.log
+.DS_Store
+Thumbs.db
+.local/
+*.anki2
+*.apkg
+*.colpkg
