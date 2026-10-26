@@ -26,16 +26,16 @@ test.afterEach(async ({ page }) => {
   expect(browserErrors.get(page), 'No browser JavaScript errors').toEqual([]);
 });
 
-test('loads synthetic native counts through the real API and never enables native rating', async ({ page }) => {
+test('loads synthetic native counts and offers native review only for due decks', async ({ page }) => {
   await openConnected(page);
   await expect(page.locator('#home-deck-rows tr')).toHaveCount(3);
   await expect(page.locator('.due-number')).toHaveText('15');
   await expect(page.locator('.new-number')).toHaveText('8');
   await expect(page.locator('#home-deck-rows .deck-name')).toHaveText(['Medicine', 'Medicine::Cardiology', 'Language']);
-  await expect(page.locator('.home-start')).toBeDisabled();
-  await expect(page.locator('#connection-detail')).toContainText('read-only');
+  await expect(page.locator('.home-start')).toBeEnabled();
+  await expect(page.locator('#connection-detail')).toContainText('review ready');
   await navigate(page, 'review');
-  await expect(page.locator('#live-review-unavailable')).toBeVisible();
+  await expect(page.getByText('Review paused.')).toBeVisible();
   await expect(page.locator('#rating-buttons')).not.toBeVisible();
   await page.keyboard.press('3');
   await page.keyboard.press('z');

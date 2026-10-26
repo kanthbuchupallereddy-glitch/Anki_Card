@@ -5,7 +5,7 @@ function connectionCopy(source: CollectionSource, connection: ConnectionState) {
   if (connection.state === 'ready') {
     const checked = new Date(connection.checkedAt);
     const time = checked.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    return [`Connected · ${connection.profile}`, `Anki ${connection.ankiVersion} · read-only · checked ${time}`];
+    return [`Connected · ${connection.profile}`, `Anki ${connection.ankiVersion} · review ready · checked ${time}`];
   }
   if (!isLocalConnection()) return ['Start the local connection', 'Launch Start Study.cmd, then open http://127.0.0.1:4173. Keep Anki open.'];
   if (connection.state === 'checking') return ['Connecting to Anki', 'Checking your profile and reading deck counts…'];

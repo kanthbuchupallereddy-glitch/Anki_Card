@@ -9,6 +9,7 @@ import { LibraryScreen } from '../features/library/LibraryScreen';
 import { TodayScreen } from '../features/library/TodayScreen';
 import { ReviewScreen } from '../features/review/ReviewScreen';
 import { useDemoReview } from '../features/review/useDemoReview';
+import { useNativeReview } from '../features/review/useNativeReview';
 import { focusPage, useNavigation } from './navigation';
 
 export function App() {
@@ -17,13 +18,15 @@ export function App() {
   const { source, connection, selectSource, refresh } = useCollectionConnection();
   const [search, setSearch] = useState('');
   const review = useDemoReview(source === 'demo');
+  const nativeReview = useNativeReview(refresh);
 
   const changeSource = (next: CollectionSource) => {
     if (next !== source) { setSearch(''); selectSource(next); }
   };
   const startReview = (deck: string) => {
-    if (source !== 'demo') return;
-    review.start(deck);
+    if (source === 'demo') review.start(deck);
+    else if (connection.state === 'ready') void nativeReview.start(deck);
+    else return;
     navigate('review');
   };
 
@@ -35,7 +38,7 @@ export function App() {
       <main id="main">
         <TodayScreen active={page === 'today'} source={source} connection={connection} onStart={startReview} />
         <LibraryScreen active={page === 'library'} source={source} connection={connection} search={search} onSearch={setSearch} onStart={startReview} />
-        <ReviewScreen active={page === 'review'} source={source} connection={connection} review={review} />
+        <ReviewScreen active={page === 'review'} source={source} connection={connection} review={review} nativeReview={nativeReview} />
       </main>
       <AppFooter source={source} connection={connection} theme={theme} />
     </div>

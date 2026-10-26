@@ -82,6 +82,9 @@ test('read-only Anki adapter and HTTP boundary', async t => {
       result = scenario === 'missing-parent' ? [listed[1]] : scenario === 'empty' ? [] : listed;
     } else if (method === 'decks.getCounts') {
       assert.equal(params.session, 'session-a');
+      if (scenario === 'empty-listed-deck' && (params.deck as { id: string }).id === '3') {
+        reply({ error: { code: 1001, message: 'Deck counts unavailable.', data: { type: 'notFound' } } }); return;
+      }
       assert.equal(params.includeChildren, true);
       const deck = params.deck as { id: string };
       const value = { ...counts[deck.id] };
@@ -128,6 +131,11 @@ test('read-only Anki adapter and HTTP boundary', async t => {
     assert.ok(!JSON.stringify(data).includes('session-a'));
     assert.equal(calls.at(-2)?.method, 'collection.get'); assert.equal(calls.at(-1)?.method, 'profiles.getActive');
   });
+  await t.test('Anki notFound counts for an empty listed deck become zero', async () => {
+    reset('empty-listed-deck'); const data = await readCollection(rpc);
+    assert.deepEqual(data.decks[2] && { new: data.decks[2].new, learning: data.decks[2].learning, review: data.decks[2].review, total: data.decks[2].total },
+      { new: 0, learning: 0, review: 0, total: 0 });
+  });
   await t.test('empty collection is a valid zero-count snapshot', async () => {
     reset('empty'); const data = await readCollection(rpc);
     assert.deepEqual(data.decks, []); assert.deepEqual(data.totals, { new: 0, learning: 0, review: 0, total: 0 });
@@ -149,7 +157,7 @@ test('read-only Anki adapter and HTTP boundary', async t => {
   });
   await t.test('RPC runtime allowlist rejects mutations before transport', async () => {
     const before = calls.length;
-    await assert.rejects((rpc as (method: string) => Promise<unknown>)('reviewer.answer'), error => error instanceof ConnectionError && error.state === 'unsupported');
+    await assert.rejects((rpc as (method: string) => Promise<unknown>)('notes.create'), error => error instanceof ConnectionError && error.state === 'unsupported');
     assert.equal(calls.length, before);
   });
   reset('ready');
@@ -208,8 +216,9 @@ test('read-only Anki adapter and HTTP boundary', async t => {
     await writeFile(path.join(webRoot, 'assets', 'index-next.js'), 'export const next = true;');
     assert.equal((await requestLocal(port, { url: '/assets/index-next.js', headers: {} })).status, 200);
   });
-  await t.test('symlinked asset directories cannot escape the compiled frontend', async () => {
-    await symlink(path.join(temp, 'private'), path.join(webRoot, 'assets', 'escape'), 'junction');
+  await t.test('symlinked asset directories cannot escape the compiled frontend', async t => {
+    try { await symlink(path.join(temp, 'private'), path.join(webRoot, 'assets', 'escape'), 'junction'); }
+    catch (error) { if ((error as NodeJS.ErrnoException).code === 'EPERM') { t.skip('Windows sandbox cannot create symlinks.'); return; } throw error; }
     assert.equal((await requestLocal(port, { url: '/assets/escape/secret.js' })).status, 404);
   });
   await t.test('untrusted upstream details never reach the browser', async () => {

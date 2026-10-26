@@ -725,3 +725,11 @@ kbd {
   max-width:500px;
   font-size:14px;
 }
+
+.native-card { width:100%; }
+.native-card-frame { width:100%; min-height:250px; border:0; background:transparent; color:var(--text); }
+.native-card .eyebrow { margin-bottom:12px; }
+.rating-buttons button[data-rating="good"] { background:var(--accent); color:var(--on-accent); border-color:var(--accent); }
+.rating-buttons button:disabled { opacity:.55; cursor:wait; }
+
+.rating-interval { display:block; margin-top:4px; font-size:11px; opacity:.7; }

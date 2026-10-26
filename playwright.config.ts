@@ -1,5 +1,6 @@
 import { defineConfig } from '@playwright/test';
 import { randomUUID } from 'node:crypto';
+import { existsSync } from 'node:fs';
 
 const fixtureToken = process.env.STUDY_E2E_RUN_ID ?? randomUUID();
 process.env.STUDY_E2E_RUN_ID = fixtureToken;
@@ -18,6 +19,8 @@ export default defineConfig({
   use: {
     baseURL: 'http://127.0.0.1:4174',
     browserName: 'chromium',
+    launchOptions: process.platform === 'win32' && existsSync('C:/Program Files/Google/Chrome/Application/chrome.exe')
+      ? { executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe' } : {},
     headless: true,
     viewport: { width: 1440, height: 1000 },
     colorScheme: 'light',

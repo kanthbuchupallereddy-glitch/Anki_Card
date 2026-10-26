@@ -23,3 +23,7 @@ export class ConnectionError extends Error {
 export function unavailable(state: ConnectionFailureState = 'unavailable'): ConnectionError {
   return new ConnectionError(state);
 }
+
+export class AnkiMethodError extends ConnectionError {
+  constructor(state: ConnectionFailureState, readonly upstreamType: string) { super(state); }
+}

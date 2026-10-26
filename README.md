@@ -23,7 +23,7 @@ Keep Anki Desktop open with AnkiConnect enabled to load real decks. Demo mode wo
 ```text
 apps/
   web/                 React screens, feature state, components, styles, artwork
-  api/                 Express controllers, collection service, Anki adapter
+  api/                 Express routes, collection/review services, Anki adapter
 packages/
   contracts/           Shared DTO types and runtime response validation
 scripts/               Launch, development, and optional live-check helpers
@@ -51,7 +51,7 @@ Read [the architecture guide](docs/architecture.md) before adding a feature. Kee
 | `npm test` | Build and run the deterministic API/contract/browser suite. |
 | `npm run test:unit` | Compile and run API/contract tests with Node's test runner. |
 | `npm run test:e2e` | Run Playwright against the existing frontend build and a synthetic local API. |
-| `npm run test:live` | Optional read-only check against an already-running Study and Anki. |
+| `npm run test:live` | Optional read-only connection check against an already-running Study and Anki. |
 
 After `npm ci`, install the test browser once with `npx playwright install chromium` if it is not already available. The normal test suite does not connect to Anki, require a personal profile, or modify a collection. Browser tests use port 4174; the app normally uses 4173. Test reports and generated builds are ignored by Git.
 
@@ -62,13 +62,14 @@ Both normal use and development serve only the compiled frontend through Express
 - Light, Dark and System appearance persist across reloads.
 - Anki source shows the active profile, real deck names and native new/learning/review counts. Parent rows include subdecks; Today totals count only top-level decks.
 - Deck data refreshes every 60 seconds while visible, on return/focus, on source selection and with Refresh connection. This is not AnkiWeb sync.
-- Demo source has sample search, reveal, Again/Hard/Good/Easy, keyboard shortcuts and undo. Demo progress is not saved to Anki.
-- Live native review, saved ratings, editing, native undo and sync remain unimplemented. Use Anki for those operations.
+- In Anki source, select a deck, reveal a card, and choose one of Anki’s offered Again/Hard/Good/Easy ratings. Study waits for Anki to confirm the review before showing the next card. Anki stores the rating and schedules the card. Space reveals; 1–4 select the shown ratings.
+- Demo source has sample search, reveal, ratings, keyboard shortcuts and undo. Demo progress is not saved to Anki.
+- Create and edit cards, manage media, sync and use add-ons in Anki. Native undo and sync from Study are not yet available. Rich media, interactive templates and all add-ons have not been verified in Study; use Anki for those cards.
 
-The integration was previously checked with Anki 26.09.3 and AnkiConnect API v1. It accepts only the verified read interface. Installations requiring an API key need future local configuration support. Full add-on/template compatibility and representative native-collection checks remain pending.
+Basic text-card review was checked live with Anki 26.09.3 and AnkiConnect API v1 in a separate test profile. A Good rating entered through Study became a learning card; an Easy rating became a review card due in three days. Installations requiring an API key need future local configuration support. Other versions, media, interactive templates and add-on compatibility remain unverified.
 
 ## Privacy and publishing
 
-The app binds to `127.0.0.1` and exposes fixed read-only endpoints. It has no general Anki proxy, native write endpoint or public deployment. Public assets are separate from server sources and personal documents. Optional Google Fonts have system-font fallbacks.
+The app binds to `127.0.0.1` and exposes fixed collection and native review endpoints. The review endpoint can save ratings to the active Anki profile. It has no general Anki proxy or public deployment. Public assets are separate from server sources and personal documents. Optional Google Fonts have system-font fallbacks.
 
-`specs/`, personal planning/verification documents, local settings, collection packages and generated reports are excluded by `.gitignore`. Do not force-add them. Do not commit or push without the project owner's instruction.
+`specs/`, personal planning/verification documents, local settings, collection packages and generated reports are excluded by `.gitignore`. Do not force-add them. Commit or push only with the project owner’s instruction.

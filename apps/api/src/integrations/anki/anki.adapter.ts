@@ -1,4 +1,4 @@
-import { unavailable } from './connection-error.js';
+import { AnkiMethodError, unavailable } from './connection-error.js';
 import { parseCollection, parseCounts, parseDecks, parseDescription, parseProfile } from './anki.schemas.js';
 import type { AnkiRpc } from './anki.types.js';
 
@@ -12,6 +12,14 @@ export function createAnkiAdapter(rpc: AnkiRpc, signal: AbortSignal) {
     activeProfile: async () => parseProfile(await call('profiles.getActive')),
     collection: async (session?: string) => parseCollection(await call('collection.get', session ? { session } : {})),
     decks: async (session: string) => parseDecks(await call('decks.list', { session })),
-    counts: async (id: string, session: string) => parseCounts(await call('decks.getCounts', { deck: { id }, includeChildren: true, session }), id),
+    counts: async (id: string, session: string) => {
+      try { return parseCounts(await call('decks.getCounts', { deck: { id }, includeChildren: true, session }), id); }
+      catch (error) {
+        // AnkiConnect reports notFound when a real listed deck has zero cards.
+        if (error instanceof AnkiMethodError && error.upstreamType === 'notFound')
+          return { new: 0, learning: 0, review: 0, total: 0 };
+        throw error;
+      }
+    },
   };
 }

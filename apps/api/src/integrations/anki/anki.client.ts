@@ -1,8 +1,8 @@
 import http from 'node:http';
 import type { ClientRequest } from 'node:http';
 import type { ConnectionFailureState } from '@study/contracts';
-import { ANKI_ENDPOINT, LIMITS, READ_METHODS } from '../../config/runtime.js';
-import { unavailable } from './connection-error.js';
+import { ANKI_ENDPOINT, API_METHODS, LIMITS } from '../../config/runtime.js';
+import { AnkiMethodError, unavailable } from './connection-error.js';
 import { isRecord } from './anki.schemas.js';
 import type { AnkiRpc, RequestTransport } from './anki.types.js';
 
@@ -12,8 +12,8 @@ export interface AnkiRpcOptions { request?: RequestTransport; timeoutMs?: number
 export function createAnkiRpc({ request = http.request, timeoutMs = LIMITS.rpcTimeoutMs }: AnkiRpcOptions = {}): AnkiRpc {
   let nextId = 0;
   return (method, params = {}, { signal } = {}) => {
-    if (!(READ_METHODS as readonly string[]).includes(method)) return Promise.reject(unavailable('unsupported'));
-    const id = `study-read-${++nextId}`;
+    if (!(API_METHODS as readonly string[]).includes(method)) return Promise.reject(unavailable('unsupported'));
+    const id = `study-rpc-${++nextId}`;
     const body = JSON.stringify({ jsonrpc: '2.0', id, method, params });
     return new Promise<unknown>((resolve, reject) => {
       let finished = false;
@@ -56,7 +56,7 @@ export function createAnkiRpc({ request = http.request, timeoutMs = LIMITS.rpcTi
                 staleSession: 'profile-changed', collectionUnavailable: 'unavailable', authenticationRequired: 'authentication',
                 busy: 'busy', unsupportedCapability: 'unsupported',
               };
-              finish(unavailable(states[type])); return;
+              finish(new AnkiMethodError(states[type] ?? 'unavailable', type)); return;
             }
             if (!Object.hasOwn(envelope, 'result')) { finish(unavailable('unsupported')); return; }
             finish(null, envelope.result);
